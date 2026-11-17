@@ -39,7 +39,7 @@ struct PredictResponse {
 }
 
 // Função para carregar os dados de um arquivo CSV para treinar o modelo
-fn dsa_carrega_csv(filename: &str) -> (Array2<f64>, Array1<usize>) {
+fn carrega_csv(filename: &str) -> (Array2<f64>, Array1<usize>) {
     
     // Cria um leitor de CSV e garante que ele tenha cabeçalhos
     let mut rdr = ReaderBuilder::new().has_headers(true).from_path(filename).expect("Falha ao abrir o CSV");
@@ -75,10 +75,10 @@ fn dsa_carrega_csv(filename: &str) -> (Array2<f64>, Array1<usize>) {
 }
 
 // Função para treinar o modelo e salvá-lo
-fn dsa_treina_salva_modelo() {
+fn treina_salva_modelo() {
     
     // Carrega os dados do arquivo CSV
-    let (features, targets) = dsa_carrega_csv("dados.csv");
+    let (features, targets) = carrega_csv("dados.csv");
 
     // Cria o dataset para treinamento
     let dataset = Dataset::new(features, targets); 
@@ -95,7 +95,7 @@ fn dsa_treina_salva_modelo() {
 }
 
 // Função para carregar o modelo treinado de um arquivo
-fn dsa_carrega_modelo() -> Result<linfa_logistic::FittedLogisticRegression<f64, usize>, String> {
+fn carrega_modelo() -> Result<linfa_logistic::FittedLogisticRegression<f64, usize>, String> {
     
     // Abre o arquivo onde o modelo treinado foi salvo
     let file = OpenOptions::new().read(true).open("modelo.bin").map_err(|_| "Falha ao abrir o arquivo do modelo".to_string())?;
@@ -113,7 +113,7 @@ fn dsa_carrega_modelo() -> Result<linfa_logistic::FittedLogisticRegression<f64, 
 fn predict(input: Json<PredictRequest>) -> Json<PredictResponse> {
     
     // Tenta carregar o modelo treinado
-    match dsa_carrega_modelo() {
+    match carrega_modelo() {
         
         Ok(fitted_model) => {
 
@@ -139,7 +139,7 @@ fn predict(input: Json<PredictRequest>) -> Json<PredictResponse> {
 async fn main() {
 
     // Treina e salva o modelo ao iniciar o servidor
-    dsa_treina_salva_modelo();
+    treina_salva_modelo();
 
     rocket::build()
 

@@ -2,11 +2,11 @@
 
 # Acesse o terminal ou prompt de comando, acesse a pasta onde colocou os arquivos e execute o comando abaixo para criar o projeto Rust
 
-cargo new dsaprojeto8
+cargo new classification-api
 
 # Acesse a pasta do projeto:
 
-cd dsaprojeto8
+cd classification-api
 
 # Coloque o arquivo dados.csv na pasta do projeto
 
@@ -31,7 +31,7 @@ cargo build --release
 # Na mesma pasta anterior, execute o comando abaixo.
 # Isso vai treinar o modelo, salvar em disco, carregar e disponibilizar via API
 
-./target/release/dsaprojeto8
+./target/release/classification-api
 
 # Abra outro terminal ou prompt e execute o comando abaixo para enviar dados para a API e testar o modelo
 # Se for usuário Windows, instale o curl: https://curl.se/
